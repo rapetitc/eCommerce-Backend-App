@@ -1,12 +1,11 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "Backend Project",
-  "main": "./src/index.js",
+  "description": "eCommerce Backend Project",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node --watch ./src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --watch ./src/index.js"
   },
   "author": "@rapetitc",
   "license": "ISC",
