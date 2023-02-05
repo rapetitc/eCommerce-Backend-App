@@ -1,5 +1,1 @@
-[
-  { "id": 1, "title": "Nokia 365N", "description": "Telefono de gama baja", "code": "as3a17", "price": 100, "status": true, "stock": 30, "category": "Celulares", "thumbnails": ["url1"] },
-  { "id": 2, "title": "iPhone 14", "description": "Telefono de gama alta", "code": "as3aw7", "price": 1100, "status": true, "stock": 30, "category": "Celulares", "thumbnails": ["url1"] },
-  { "id": 3, "title": "Samsung Galaxy A71", "description": "Telefono de gama media", "code": "as3aw5", "price": 500, "status": true, "stock": 30, "category": "Celulares", "thumbnails": ["url1"] }
-]
+[{"id":1,"title":"iPhone 14","description":"Telefono inteligente de gama alta","code":"as3aw7as3aw5","price":1100,"status":true,"stock":30,"category":"Celulares","thumbnails":["url1"]},{"id":2,"title":"Samsung Galaxy A70","description":"Telefono inteligente de baja gama","code":"lPI9JZ1AQZ9L","price":15,"status":true,"stock":15,"category":"Celulares","thumbnails":[]},{"id":3,"title":"Samsung Galaxy A71","description":"Telefono inteligente de baja gama","code":"UnU1UL5dYdez","price":600,"status":true,"stock":30,"category":"Celulares","thumbnails":[]}]

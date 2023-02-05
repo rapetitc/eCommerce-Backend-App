@@ -1,41 +1,59 @@
-import fs from 'fs'
-const fsp = fs.promises
+import fs, { promises as fsp } from 'fs'
 
 import check from '../utils/checkers.js'
-
-const isFileCreated = async (path) => {
-  if (!fs.existsSync(path)) await fsp.writeFile(path, '[]')
-}
 
 class ProductManager {
   constructor() {
     this.dbname = "products"
     this.pathdb = './src/models/' + this.dbname + '.json'
   }
+  // Funciones extras para el funcionamiento de la app
+  generateUniqueCode(length) {
+    let result = '';
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+  async getDataBase() {
+    if (!fs.existsSync(this.pathdb)) await fsp.writeFile(this.pathdb, '[]')
+    return JSON.parse(await fsp.readFile(this.pathdb))
+  }
+  async validCode(code) {
+    if (code) {
+      if (code.length !== 12) throw 'El codigo del producto no cumple con los requisitos. Este campo requiere de 12 caracteres.'
+      const dbprod = await this.getDataBase()
+      const codeFound = dbprod.some((prod) => prod.code == code)
+      if (codeFound) throw 'El codigo esta repetido en otro producto.'
+    } else {
+      code = this.generateUniqueCode(12)
+    }
+    return code
+  }
+  // Funciones para las consultas
   async getProducts() {
-    await isFileCreated(this.pathdb)
-    const dbprod = await fsp.readFile(this.pathdb)
+    const dbprod = await this.getDataBase()
     return dbprod
   }
-  async getProductById(id) {
-    await isFileCreated(this.pathdb)
-    const dbprod = JSON.parse(await fsp.readFile(this.pathdb))
+  async getProductById(pid) {
+    const id = check.id(pid)
+    const dbprod = await this.getDataBase()
     const prodFound = dbprod.find((item) => { return item.id === id })
     return prodFound ?? {}
   }
   async addProduct({ title, description, code, price, status, stock, category, thumbnails }) {
-    await isFileCreated(this.pathdb)
-    const dbprod = JSON.parse(await fsp.readFile(this.pathdb))
+    const data = { title: check.title(title), description: check.description(description), code: await this.validCode(code), price: check.price(price), status: check.status(status), stock: check.stock(stock), category: check.category(category), thumbnails: check.thumbnails(thumbnails) }
+    const dbprod = await this.getDataBase()
     const id = dbprod.length > 0 ? dbprod[dbprod.length - 1].id + 1 : 1
-    dbprod.push({ id, ...{ title: check.title(title), description: check.description(description), code: check.code(code), price: check.price(price), status: check.status(status), stock: check.stock(stock), category: check.category(category), thumbnails: check.thumbnails(thumbnails) } })
+    dbprod.push({ id, ...data })
     await fsp.writeFile(this.pathdb, JSON.stringify(dbprod))
   }
-  async updateProduct(id, { title, description, code, price, status, stock, category, thumbnails }) {
-    await isFileCreated(this.pathdb)
-    let dbprod = JSON.parse(await fsp.readFile(this.pathdb))
-
+  async updateProduct(pid, { title, description, code, price, status, stock, category, thumbnails }) {
+    const dbprod = await this.getDataBase()
     dbprod.forEach(item => {
-      if (item.id === id) {
+      if (item.id === pid) {
         if (title) item.title = check.title(title)
         if (description) item.description = check.description(description)
         if (code) item.code = check.code(code)
@@ -48,9 +66,9 @@ class ProductManager {
     });
     await fsp.writeFile(this.pathdb, JSON.stringify(dbprod))
   }
-  async deleteProduct(id) {
-    await isFileCreated(this.pathdb)
-    const dbprod = JSON.parse(await fsp.readFile(this.pathdb))
+  async deleteProduct(pid) {
+    const id = check.id(pid)
+    const dbprod = await this.getDataBase()
     const newData = dbprod.filter((item) => { return item.id !== id })
     await fsp.writeFile(this.pathdb, JSON.stringify(newData))
   }

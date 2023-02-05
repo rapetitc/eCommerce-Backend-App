@@ -20,5 +20,5 @@ app.use('/api/products', prodsRouter)
 
 //Server
 app.listen(PORT, () => {
-  console.log(`Servidor encendido. Visita http://localhost:${PORT} para realizar tus pruebas de manera mas facil.`);
+  console.log(`\n\tServidor encendido y escuchando en el puerto ${PORT}.\n\tVisita http://localhost:${PORT} para encontrar un pequeño manual y asi realizar tus pruebas de manera mas facil.`);
 })

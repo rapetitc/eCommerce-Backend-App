@@ -63,3 +63,12 @@ textarea#template{
   width: 400px;
   resize: none;
 }
+ul.notas {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  width: 100%;
+}
+ul.notas > li {
+  width: 50%;
+}
