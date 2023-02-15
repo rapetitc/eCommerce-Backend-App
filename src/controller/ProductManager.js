@@ -1,6 +1,8 @@
-import fs, { promises as fsp } from 'fs'
+const fs = require("fs")
+const fsp = fs.promises
+const check = require('../utils/checkers.js')
+const connectedSocket = require('../index.js')
 
-import check from '../utils/checkers.js'
 
 class ProductManager {
   constructor() {
@@ -74,4 +76,4 @@ class ProductManager {
   }
 }
 
-export default ProductManager
+module.exports = ProductManager

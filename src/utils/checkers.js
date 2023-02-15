@@ -44,4 +44,4 @@ const check = {
     return thumbnails
   }
 }
-export default check
+module.exports = check

@@ -1,6 +1,7 @@
-import fs, { promises as fsp } from 'fs'
-import ProductManager from "./ProductManager.js";
-import check from '../utils/checkers.js';
+const fs = require("fs")
+const fsp = fs.promises
+const ProductManager = require('./ProductManager.js')
+const check = require('../utils/checkers.js')
 
 const prodManager = new ProductManager
 
@@ -43,4 +44,4 @@ class CartManager {
   }
 }
 
-export default CartManager
+module.exports = CartManager
