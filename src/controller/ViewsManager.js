@@ -1,4 +1,4 @@
-const ProductManager = require('./ProductManager.js')
+import ProductManager from './ProductManager.js'
 
 const prodManager = new ProductManager
 
@@ -15,4 +15,4 @@ class ViewsManager {
   }
 }
 
-module.exports = ViewsManager
+export default ViewsManager

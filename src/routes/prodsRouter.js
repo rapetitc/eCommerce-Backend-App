@@ -1,7 +1,5 @@
-const { Router } = require('express')
-const ProductManager = require('../controller/ProductManager.js')
-// import { Router } from "express"
-// import ProductManager from "../controller/ProductManager.js"
+import { Router } from 'express'
+import ProductManager from '../controller/ProductManager.js'
 
 const prodsRouter = Router()
 const prod = new ProductManager
@@ -50,4 +48,4 @@ prodsRouter.route('/:pid')
     }
   })
 
-module.exports = prodsRouter
+export default prodsRouter

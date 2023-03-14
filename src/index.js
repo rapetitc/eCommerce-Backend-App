@@ -1,24 +1,26 @@
-const path = require('path')
-const express = require('express')
-const io = require('socket.io')
-const { engine } = require('express-handlebars')
+import path from 'path'
+import { fileURLToPath } from 'url';
+import express from 'express'
+import { Server } from 'socket.io'
+import { engine } from 'express-handlebars'
 
-const ProductManager = require('./controller/ProductManager.js')
+export const __filename = fileURLToPath(import.meta.url);
+export const __dirname = path.dirname(__filename)
+
+import ProductManager from './controller/ProductManager.js'
 const prodManager = new ProductManager
 
-const viewsRouter = require('./routes/viewsRouter.js')
-const cartRouter = require('./routes/cartRouter.js')
-const prodsRouter = require('./routes/prodsRouter.js')
+import viewsRouter from './routes/viewsRouter.js'
+import cartRouter from './routes/cartRouter.js'
+import prodsRouter from './routes/prodsRouter.js'
 
-//Configuration
-const PORT = 8080
-
-//Server
+//Server Configuration
+const PORT = process.env.PORT || 8080
 const app = express()
-const server = app.listen(PORT, () => {
+const appServer = app.listen(PORT, () => {
   console.log(`\n\tServidor encendido y escuchando en el puerto ${PORT}.\n\tLee el archivo README.md para realizar las pruebas.`);
 })
-const socket = io(server)
+const socket = new Server(appServer)
 
 //Middlewares
 app.use(express.json())
@@ -27,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 //View Engine Settings
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname + '/views'));
+app.set('views', path.resolve(__dirname, './views'));
 
 //Socket Connections
 socket.on('connection', (e) => {
@@ -58,8 +60,9 @@ socket.on('connection', (e) => {
   return e
 })
 
+
 //Routes
-app.use('/static', express.static(path.join(__dirname + '/public'))) //Static
+app.use('/static', express.static('./public')) //Static
 app.use('/', viewsRouter) //Views
 app.use('/api/carts', cartRouter) //API
 app.use('/api/products', prodsRouter) //API

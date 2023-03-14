@@ -1,8 +1,5 @@
-const { Router } = require('express')
-const CartManager = require('../controller/CartManager.js')
-
-// import { Router } from "express";
-// import CartManager from "../controller/CartManager.js";
+import { Router } from 'express'
+import CartManager from '../controller/CartManager.js'
 
 const cartRouter = Router()
 const cartManager = new CartManager
@@ -38,4 +35,4 @@ cartRouter.route('/:cid/product/:pid')
     }
   })
 
-module.exports = cartRouter
+export default cartRouter

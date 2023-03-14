@@ -1,6 +1,6 @@
 # eCommerce BackEnd Project.
 
-## Bienvenidos a mi 5to Desafio de [Coderhouse](http://www.coderhouse.com) en el curso de BackEnd
+## Bienvenidos a mi entrega correspondiente a "Primera práctica integradora"
 
 ### Uso
 
